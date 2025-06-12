@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retro Game Emulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,9 +13,11 @@
             <h1>Retro Game Emulator</h1>
             <div class="controls">
                 <button id="load-btn">Load Game</button>
+                <button id="pause-btn">Pause</button>
                 <button id="reset-btn">Reset</button>
                 <button id="save-btn">Save State</button>
                 <button id="load-state-btn">Load State</button>
+                <button id="fullscreen-btn">Fullscreen</button>
             </div>
         </header>
 
@@ -25,27 +28,33 @@
             
             <div class="game-list hidden" id="game-list">
                 <h3>Select a Game</h3>
-                <ul>
-                    <li data-rom="roms/super_mario_bros.nes">Super Mario Bros.</li>
-                    <li data-rom="roms/donkey_kong.nes">Donkey Kong</li>
-                    <li data-rom="roms/pacman.nes">Pac-Man</li>
+                <div class="search-box">
+                    <input type="text" id="game-search" placeholder="Search games...">
+                </div>
+                <ul id="games">
+                    <!-- Games will be loaded here -->
                 </ul>
             </div>
         </div>
 
         <div class="controller">
             <div class="d-pad">
-                <button class="up">↑</button>
-                <button class="left">←</button>
-                <button class="right">→</button>
-                <button class="down">↓</button>
+                <button class="up" data-key="UP">↑</button>
+                <button class="left" data-key="LEFT">←</button>
+                <button class="right" data-key="RIGHT">→</button>
+                <button class="down" data-key="DOWN">↓</button>
             </div>
             <div class="buttons">
-                <button class="a">A</button>
-                <button class="b">B</button>
-                <button class="start">Start</button>
-                <button class="select">Select</button>
+                <button class="a" data-key="A">A</button>
+                <button class="b" data-key="B">B</button>
+                <button class="start" data-key="START">Start</button>
+                <button class="select" data-key="SELECT">Select</button>
             </div>
+        </div>
+
+        <div class="status-bar">
+            <span id="game-status">No game loaded</span>
+            <span id="fps-counter">0 FPS</span>
         </div>
     </div>
 
