@@ -1,0 +1,132 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #222;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.controls {
+    margin: 15px 0;
+}
+
+button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+.emulator-container {
+    position: relative;
+    margin: 0 auto;
+    width: 512px;
+}
+
+.screen-container {
+    background-color: #000;
+    padding: 20px;
+    border: 5px solid #555;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+#nes-screen {
+    width: 512px;
+    height: 480px;
+    image-rendering: pixelated;
+}
+
+.game-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    z-index: 100;
+}
+
+.game-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.game-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.game-list li:hover {
+    background-color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+.controller {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.d-pad, .buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.d-pad button, .buttons button {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.up {
+    grid-column: 2;
+}
+
+.left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.down {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.a, .b {
+    background-color: #e74c3c;
+}
+
+.start, .select {
+    background-color: #3498db;
+}
