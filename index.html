@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Game Emulator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Retro Game Emulator</h1>
+            <div class="controls">
+                <button id="load-btn">Load Game</button>
+                <button id="reset-btn">Reset</button>
+                <button id="save-btn">Save State</button>
+                <button id="load-state-btn">Load State</button>
+            </div>
+        </header>
+
+        <div class="emulator-container">
+            <div class="screen-container">
+                <canvas id="nes-screen" width="256" height="240"></canvas>
+            </div>
+            
+            <div class="game-list hidden" id="game-list">
+                <h3>Select a Game</h3>
+                <ul>
+                    <li data-rom="roms/super_mario_bros.nes">Super Mario Bros.</li>
+                    <li data-rom="roms/donkey_kong.nes">Donkey Kong</li>
+                    <li data-rom="roms/pacman.nes">Pac-Man</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="controller">
+            <div class="d-pad">
+                <button class="up">↑</button>
+                <button class="left">←</button>
+                <button class="right">→</button>
+                <button class="down">↓</button>
+            </div>
+            <div class="buttons">
+                <button class="a">A</button>
+                <button class="b">B</button>
+                <button class="start">Start</button>
+                <button class="select">Select</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jsnes.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
