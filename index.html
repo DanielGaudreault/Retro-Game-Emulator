@@ -307,46 +307,75 @@
         });
 
         // Emulator setup
-        const canvas = document.getElementById('nes-canvas');
-        const ctx = canvas.getContext('2d');
-        const romInput = document.getElementById('rom-input');
-        const startPauseButton = document.getElementById('start-pause-button');
-        let nes = new JSNES({
-            'ui': {
-                writeFrame: function(buffer, prevBuffer) {
-                    const imageData = ctx.createImageData(256, 240);
-                    const rgbBuf = new Uint8Array(256 * 240 * 4);
-                    for (let i = 0; i < buffer.length; i++) {
-                        rgbBuf[i * 4] = buffer[i][0];
-                        rgbBuf[i * 4 + 1] = buffer[i][1];
-                        rgbBuf[i * 4 + 2] = buffer[i][2];
-                        rgbBuf[i * 4 + 3] = 255;
-                    }
-                    imageData.data.set(rgbBuf);
-                    ctx.putImageData(imageData, 0, 0);
-                },
-                writeAudio: function() {}, // Audio disabled for simplicity
-                updateStatus: function(s) { console.log(s); }
-            }
-        });
-        let isRunning = false;
+const canvas = document.getElementById('nes-canvas');
+const ctx = canvas.getContext('2d');
+const romInput = document.getElementById('rom-input');
+const startPauseButton = document.getElementById('start-pause-button');
+let nes;
+let isRunning = false;
 
-        romInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        nes.loadROM(e.target.result);
-                        startPauseButton.disabled = false;
-                    } catch (err) {
-                        alert('Invalid NES ROM file.');
-                        console.error(err);
-                    }
-                };
-                reader.readAsBinaryString(file);
+// Initialize NES when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+    nes = new JSNES({
+        'ui': {
+            writeFrame: function(buffer, prevBuffer) {
+                const imageData = ctx.createImageData(256, 240);
+                const rgbBuf = new Uint8Array(256 * 240 * 4);
+                for (let i = 0; i < buffer.length; i++) {
+                    rgbBuf[i * 4] = buffer[i][0];
+                    rgbBuf[i * 4 + 1] = buffer[i][1];
+                    rgbBuf[i * 4 + 2] = buffer[i][2];
+                    rgbBuf[i * 4 + 3] = 255;
+                }
+                imageData.data.set(rgbBuf);
+                ctx.putImageData(imageData, 0, 0);
+            },
+            writeAudio: function() {}, // Audio disabled for simplicity
+            updateStatus: function(s) { console.log(s); }
+        }
+    });
+});
+
+romInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                nes.loadROM(e.target.result);
+                startPauseButton.disabled = false;
+                startPauseButton.textContent = 'Start';
+                isRunning = false;
+            } catch (err) {
+                alert('Invalid NES ROM file.');
+                console.error(err);
+                startPauseButton.disabled = true;
             }
-        });
+        };
+        reader.onerror = function() {
+            alert('Error reading ROM file.');
+            startPauseButton.disabled = true;
+        };
+        reader.readAsBinaryString(file);
+    }
+});
+
+startPauseButton.addEventListener('click', function() {
+    if (!nes.rom) {
+        alert('Please load a ROM first!');
+        return;
+    }
+
+    if (isRunning) {
+        nes.stop();
+        startPauseButton.textContent = 'Start';
+        isRunning = false;
+    } else {
+        nes.start();
+        startPauseButton.textContent = 'Pause';
+        isRunning = true;
+    }
+});
 
         startPauseButton.addEventListener('click', function() {
             if (isRunning) {
